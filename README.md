@@ -21,3 +21,10 @@ This project simulates five CPU registers (A-E), each holding a dynamic list of 
 - **GraphQL**: Will be used to fetch register data.
 - **Strawberry**: GraphQL library for Python, integrating with FastAPI for the API layer.
 - **PostgreSQL**: Backend data store for all updates.
+
+##File
+
+![image](https://github.com/user-attachments/assets/b423a1bb-5382-48ea-8f7c-87758db7dd02)
+
+##GraphQL Query
+![image](https://github.com/user-attachments/assets/572ece0f-a5c3-472a-b026-2cb75348ecce)
