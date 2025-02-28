@@ -61,7 +61,7 @@ void update_registers(CPURegisters& cpu) {
     while (true) {
         cpu.add_random_value();
         cpu.display_registers();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(400));
         system("clear");
     }
 }
