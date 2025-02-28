@@ -3,7 +3,7 @@
 This project simulates five CPU registers (A-E), each holding a dynamic list of integers. It uses **C++** to simulate the CPU registers and populate them with random values at regular intervals. The updates are displayed in the console every second.
 
 ### CPU Register Simulation
-- CPU Registers Simulation: Simulates 5 CPU registers (A, B, C, D, E), each holding a random list of integers.
+- CPU Registers Simulation: Simulates 5 CPU registers (A, B, C, D, E), each holding a random list of integers, caps out at 10.
 - Random Number Generation: Random integers are added to the registers at regular intervals.
 
 ## To Run the CPU
@@ -22,9 +22,9 @@ This project simulates five CPU registers (A-E), each holding a dynamic list of 
 - **Strawberry**: GraphQL library for Python, integrating with FastAPI for the API layer.
 - **PostgreSQL**: Backend data store for all updates.
 
-##File
+## File
 
 ![image](https://github.com/user-attachments/assets/b423a1bb-5382-48ea-8f7c-87758db7dd02)
 
-##GraphQL Query
+## GraphQL Query
 ![image](https://github.com/user-attachments/assets/572ece0f-a5c3-472a-b026-2cb75348ecce)
