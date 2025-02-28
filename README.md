@@ -8,11 +8,14 @@ This project simulates five CPU registers (A-E), each holding a dynamic list of 
 
 ## To Run the CPU
 - g++ -std=c++20 -pthread app.cpp -o app
-- Use the above command to run, cpp 20, pthread library linkage for multithreading
+- ./app
 
-## To view in GraphQL
+- Use the above two commands to run, cpp 20, pthread library linkage for multithreading
+
+## To view in GraphQL (SEPARATE TERMINAL)
 - uvicorn graphql_server:app --reload
-- Must have uvicorn, graphql, fastAPI installed
+- Server will then run on http://127.0.0.1:<port>/graphql     where <port> is the port uvicorn selected
+- Must have uvicorn, graphql, fastAPI installed. Make sure you are in another terminal than the CPP file
 
 ### Web API and Data Integration
 - **GraphQL**: Will be used to fetch register data.

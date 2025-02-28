@@ -5,7 +5,8 @@
 #include <chrono>
 #include <string>
 #include <map>
-#include <fstream> // For file operations
+#include <fstream>
+#include <mutex>
 
 class CPURegisters {
 public:
@@ -28,49 +29,78 @@ public:
         std::string chosen_register = register_keys[reg_dist(gen)];
         int value = dist(gen);
 
+        // Lock while modifying registers
+        std::lock_guard<std::mutex> lock(mutex);
+        
         // Push to the top of the list
         registers[chosen_register].insert(registers[chosen_register].begin(), value);
+        
+        // If the size of the vector exceeds 10, remove the last element
+        if (registers[chosen_register].size() > 10) {
+            registers[chosen_register].pop_back();
+        }
     }
 
     void display_registers() {
-        std::ofstream file("cpu_registers_output.txt", std::ios::trunc); // Open file in truncate mode to clear previous data
-
-        // Iterate through all the registers
-        for (auto& reg : registers) {
-            // If the size of the vector exceeds 10, remove the last element
-            if (reg.second.size() > 10) {
-                reg.second.pop_back();  // Removes the last element
-            }
-
-            // Write the register data to the file
-            file << "Register " << reg.first << ": [ ";
-            for (int val : reg.second) {
-                file << val << " ";
-            }
-            file << "] Length: " << reg.second.size() << "\n";
+        // Lock while reading registers for display
+        std::lock_guard<std::mutex> lock(mutex);
+        
+        // Use a temporary file to avoid race conditions
+        std::ofstream temp_file("cpu_registers_temp.txt");
+        
+        if (!temp_file.is_open()) {
+            std::cerr << "Error opening temporary file!" << std::endl;
+            return;
         }
+
+        // Iterate through all the registers and write to temp file
+        for (auto& reg : registers) {
+            temp_file << "Register " << reg.first << ": [ ";
+            for (int val : reg.second) {
+                temp_file << val << " ";
+            }
+            temp_file << "] Length: " << reg.second.size() << "\n";
+        }
+        
+        // Close the temp file
+        temp_file.close();
+        
+        // Atomically replace the output file with the temp file
+        #ifdef _WIN32
+        std::remove("cpu_registers_output.txt");
+        std::rename("cpu_registers_temp.txt", "cpu_registers_output.txt");
+        #else
+        std::rename("cpu_registers_temp.txt", "cpu_registers_output.txt");
+        #endif
     }
 
 private:
     std::map<std::string, std::vector<int>> registers;
+    std::mutex mutex;  // To protect concurrent access to registers
 };
 
 void update_registers(CPURegisters& cpu) {
     while (true) {
         cpu.add_random_value();
         cpu.display_registers();
-        std::this_thread::sleep_for(std::chrono::milliseconds(400));
-        system("clear");
+        
+        // Less frequent updates to reduce file I/O load
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        
+        // Don't clear the console - this makes debugging easier
+        // system("clear");  // Commented out
     }
 }
 
 int main() {
     CPURegisters cpu;
     std::cout << "Simulating real-time register updates...\n" << std::endl;
+    std::cout << "Register data is being written to cpu_registers_output.txt\n" << std::endl;
+    
     std::thread update_thread(update_registers, std::ref(cpu));
-
-    // Let the program run for a while and update registers in real-time
-    std::this_thread::sleep_for(std::chrono::seconds(10));
+    
+    // Keep the program running until user presses Ctrl+C
+    std::cout << "Press Ctrl+C to exit...\n" << std::endl;
     update_thread.join();
     
     return 0;

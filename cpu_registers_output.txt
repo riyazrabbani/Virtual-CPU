@@ -1,5 +1,5 @@
-Register A: [ 94 37 98 88 55 33 68 36 22 25 ] Length: 10
-Register B: [ 96 81 85 27 41 68 14 25 63 90 ] Length: 10
-Register C: [ 90 77 91 17 61 99 75 58 77 18 ] Length: 10
-Register D: [ 6 28 48 11 11 53 32 41 11 11 ] Length: 10
-Register E: [ 99 53 68 49 46 72 21 11 37 9 ] Length: 10
+Register A: [ 89 50 80 9 19 67 ] Length: 6
+Register B: [ 79 58 42 71 34 ] Length: 5
+Register C: [ 45 16 90 67 89 11 14 16 ] Length: 8
+Register D: [ 59 98 42 13 93 13 77 93 30 50 ] Length: 10
+Register E: [ 91 99 59 23 12 71 63 71 80 32 ] Length: 10
