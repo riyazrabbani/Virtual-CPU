@@ -14,7 +14,7 @@ This project simulates five CPU registers (A-E), each holding a dynamic list of 
 
 ## To view in GraphQL (SEPARATE TERMINAL)
 - uvicorn graphql_server:app --reload
-- Server will then run on http://127.0.0.1:<port>/graphql     where <port> is the port uvicorn selected
+- Server will then run on http://127.0.0.1:PORT/graphql     where PORT is the port uvicorn selected
 - Must have uvicorn, graphql, fastAPI installed. Make sure you are in another terminal than the CPP file
 
 ### Web API and Data Integration
