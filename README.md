@@ -22,7 +22,7 @@ This project simulates five CPU registers (A-E), each holding a dynamic list of 
 - **Strawberry**: GraphQL library for Python, integrating with FastAPI for the API layer.
 - **PostgreSQL**: Backend data store for all updates.
 
-## File
+## File "cpu_registers_output.txt"
 
 ![image](https://github.com/user-attachments/assets/b423a1bb-5382-48ea-8f7c-87758db7dd02)
 
