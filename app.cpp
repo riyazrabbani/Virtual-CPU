@@ -5,21 +5,22 @@
 #include <chrono>
 #include <string>
 #include <map>
+#include <fstream> // For file operations
 
 class CPURegisters {
 public:
     CPURegisters() {
-        //register creation
+        // Register creation
         registers = {{"A", {}}, {"B", {}}, {"C", {}}, {"D", {}}, {"E", {}}};
     }
 
     void add_random_value() {
-        //randomly choose a register, using uniform dist 1 - 100
+        // Randomly choose a register, using uniform dist 1 - 100
         static std::random_device rd;
         static std::mt19937 gen(rd());
         static std::uniform_int_distribution<> dist(1, 100);
 
-        //storing keys with indexes
+        // Storing keys with indexes
         std::vector<std::string> register_keys = {"A", "B", "C", "D", "E"};
         std::uniform_int_distribution<> reg_dist(0, 4);
 
@@ -27,31 +28,28 @@ public:
         std::string chosen_register = register_keys[reg_dist(gen)];
         int value = dist(gen);
 
-        //push to the top
+        // Push to the top of the list
         registers[chosen_register].insert(registers[chosen_register].begin(), value);
     }
 
     void display_registers() {
-        std::cout << "----------------------\n" << std::endl;
-    
-        //iterate through all the registers
+        std::ofstream file("cpu_registers_output.txt", std::ios::trunc); // Open file in truncate mode to clear previous data
+
+        // Iterate through all the registers
         for (auto& reg : registers) {
-            //if the size of the vector exceeds 10, remove the last element
+            // If the size of the vector exceeds 10, remove the last element
             if (reg.second.size() > 10) {
                 reg.second.pop_back();  // Removes the last element
             }
-    
-            //display the register name and its values
-            std::cout << "Register " << reg.first << ": [ ";
+
+            // Write the register data to the file
+            file << "Register " << reg.first << ": [ ";
             for (int val : reg.second) {
-                std::cout << val << " ";
+                file << val << " ";
             }
-            std::cout << "]  Length: " << reg.second.size() << "\n";
+            file << "] Length: " << reg.second.size() << "\n";
         }
-    
-        std::cout << "----------------------\n" << std::endl;
     }
-    
 
 private:
     std::map<std::string, std::vector<int>> registers;
